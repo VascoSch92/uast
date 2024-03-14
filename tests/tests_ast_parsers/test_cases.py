@@ -1,8 +1,8 @@
 from uast.core.containers.containers import (
     Class,
+    Import,
     Method,
     Variable,
-    Import,
 )
 
 assignment = """

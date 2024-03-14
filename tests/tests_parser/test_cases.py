@@ -2,10 +2,10 @@ from pathlib import Path
 
 from uast.core.containers.containers import (
     Class,
+    Import,
     Method,
     Script,
     Variable,
-    Import,
 )
 
 assignment = """
@@ -52,11 +52,11 @@ class_def_container = [
 script_test_case = Script(
     name="script_test_case.py",
     imports=[
-        Import(module='abc', component='ABC', asname=None),
-        Import(module='abc', component='abstractmethod', asname=None),
-        Import(module='typing', component='Union', asname=None),
-        Import(module='pathlib', component='Path', asname=None),
-        Import(module='numpy', component=None, asname='np'),
+        Import(module="abc", component="ABC", asname=None),
+        Import(module="abc", component="abstractmethod", asname=None),
+        Import(module="typing", component="Union", asname=None),
+        Import(module="pathlib", component="Path", asname=None),
+        Import(module="numpy", component=None, asname="np"),
     ],
     global_variables=[
         Variable(name="CONST", value="Path().cwd()", variable_type="global variable", annotation=None),

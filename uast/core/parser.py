@@ -4,14 +4,16 @@ from typing import Dict, List, Union
 from pathlib import Path
 from collections import defaultdict
 
-from uast.core.containers.containers import (
-    Script,
-)
 from uast.core.ast_parsers import (
     parse_ast_assign,
+    parse_ast_import,
     parse_ast_class_def,
     parse_ast_ann_assign,
-    parse_ast_function_def, parse_ast_import_from, parse_ast_import,
+    parse_ast_import_from,
+    parse_ast_function_def,
+)
+from uast.core.containers.containers import (
+    Script,
 )
 
 

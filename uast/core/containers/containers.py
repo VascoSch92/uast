@@ -1,7 +1,7 @@
-from dataclasses import field, dataclass
 from typing import Any, Dict, List, Union
+from dataclasses import field, dataclass
 
-from uast.core.containers.containers_mixin import EqualityMixin, JsonMixin
+from uast.core.containers.containers_mixin import JsonMixin, EqualityMixin
 
 __all__ = [
     "Variable",
@@ -189,7 +189,7 @@ class Script(EqualityMixin, JsonMixin):
 
             for import_ in self.imports:
                 schema += "\n"
-                schema += import_.schema(_prefix=f" |    ", _with_leaf=True)
+                schema += import_.schema(_prefix=" |    ", _with_leaf=True)
 
         for global_variable in self.global_variables:
             schema += "\n"

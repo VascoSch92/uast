@@ -10,12 +10,14 @@ from uast.core.ast_parsers import (
     parse_ast_dict,
     parse_ast_list,
     parse_ast_assign,
+    parse_ast_import,
     parse_ast_constant,
     parse_ast_arguments,
     parse_ast_class_def,
     parse_ast_ann_assign,
+    parse_ast_import_from,
     parse_ast_function_def,
-    _parse_type_from_annotation, parse_ast_import_from, parse_ast_import,
+    _parse_type_from_annotation,
 )
 
 

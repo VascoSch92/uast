@@ -1,5 +1,5 @@
-from typing import Any, Dict
 import json
+from typing import Any, Dict
 
 
 class EqualityMixin:
