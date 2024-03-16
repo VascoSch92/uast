@@ -8,7 +8,7 @@ def _check_instance(sample: List, instance_names: List[str]) -> None:
     for instance_name in instance_names:
         if getattr(sample[0], instance_name) != sample[1][instance_name]:
             error_message_stack += error_message(
-                expected=vars(sample[0])[instance_name],
+                expected=sample[0].__dict__()[instance_name],
                 got=sample[1][instance_name],
             )
             error_message_stack += "\n"

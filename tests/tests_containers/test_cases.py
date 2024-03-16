@@ -133,7 +133,12 @@ SCRIPT_INSTANCES_TEST_CASES = {
     "input_value": script,
     "expected_value": [
         {"name": "script_1", "imports": [], "global_variables": [], "classes": [], "methods":[]},
-        {"name": "script_2", "imports": ["import_1"], "global_variables": [], "classes": [], "methods":[]},
+        {"name": "script_2",
+         "imports": [Import(module="import_1")],
+         "global_variables": [],
+         "classes": [],
+         "methods":[]
+         },
         {
             "name": "script_3",
             "imports": [],
