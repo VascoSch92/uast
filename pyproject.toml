@@ -7,6 +7,7 @@ log_date_format = "%Y-%m-%d %H:%M:%S"
 [tool.ruff]
 # Set of rules enabled
 lint.select = [
+    "ANN201", # Missing return type annotation for public function `parse`
     "E", # Pycodestyle Error
     "F", # Pyflakes
     "B", # Flake8-bugbear
@@ -24,6 +25,8 @@ lint.select = [
     "ICN", # flake8-import-conventions
     "NPY", # NumPy-specific rules (NPY)
     "ARG", # flake8-unused-arguments
+    "PLE0604", # Invalid object in __all__, must contain only strings
+    "PLE0605", # Invalid format for __all__, must be tuple or list
     "PIE", # flake8-pie
     "PTH", # flake8-use-pathlib
     "Q000",
@@ -49,9 +52,6 @@ line-length = 121
 
 # The style in which the output message should be formatted
 output-format = "grouped"
-
-# Set of rules ignored per file
-lint.extend-per-file-ignores={"_init_.py"=["F401"]}
 
 lint.flake8-quotes.inline-quotes = "double"
 lint.flake8-quotes.docstring-quotes = "double"
