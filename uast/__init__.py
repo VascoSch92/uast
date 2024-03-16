@@ -1,5 +1,5 @@
 from uast.cli.cli import execute_command_line_interface
-from uast.core.parser import parse
+from uast.core.parser import parse  # noqa: F401
 
 
 def main() -> None:
