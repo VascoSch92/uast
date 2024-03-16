@@ -5,6 +5,7 @@ from uast.core.containers.containers import (
     Method,
     Script,
     Variable,
+    Import,
 )
 
 ############
@@ -46,7 +47,11 @@ METHOD_INSTANCES_TEST_CASES = {
     "expected_value": [
         {"name": "method_1", "arguments": [], "decorators": []},
         {"name": "method_2", "arguments": [Variable(name="variable_1")], "decorators": []},
-        {"name": "method_3", "arguments": [Variable(name="variable_1"), Variable(name="variable_2"), ], "decorators": []},
+        {
+            "name": "method_3",
+            "arguments": [Variable(name="variable_1"), Variable(name="variable_2"), ],
+            "decorators": [],
+        },
     ]
 }
 
@@ -77,9 +82,27 @@ CLASS_INSTANCES_TEST_CASES = {
     "expected_value": [
         {"name": "class_1", "bases": [], "methods": [], "class_variables": [], "instance_variables":[]},
         {"name": "class_2", "bases": ["basis"], "methods": [], "class_variables": [], "instance_variables":[]},
-        {"name": "class_3", "bases": [], "methods": [], "class_variables": [Variable(name="variable_1")], "instance_variables": []},
-        {"name": "class_4", "bases": [], "methods": [], "class_variables": [], "instance_variables":[Variable(name="variable_1")]},
-        {"name": "class_5", "bases": [], "methods": [Method(name="method_1")], "class_variables": [], "instance_variables": []},
+        {
+            "name": "class_3",
+            "bases": [],
+            "methods": [],
+            "class_variables": [Variable(name="variable_1")],
+            "instance_variables": [],
+        },
+        {
+            "name": "class_4",
+            "bases": [],
+            "methods": [],
+            "class_variables": [],
+            "instance_variables":[Variable(name="variable_1")],
+        },
+        {
+            "name": "class_5",
+            "bases": [],
+            "methods": [Method(name="method_1")],
+            "class_variables": [],
+            "instance_variables": [],
+        },
     ]
 }
 
@@ -100,7 +123,7 @@ CLASS_PROPERTIES_TEST_CASES = {
 
 script = [
     Script(name="script_1"),
-    Script(name="script_2", imports=["import_1"]),
+    Script(name="script_2", imports=[Import(module="import_1")]),
     Script(name="script_3", global_variables=[Variable(name="variable_1")]),
     Script(name="script_4", classes=[Class(name="class_1")]),
     Script(name="script_5", methods=[Method(name="method_1")]),
@@ -111,7 +134,13 @@ SCRIPT_INSTANCES_TEST_CASES = {
     "expected_value": [
         {"name": "script_1", "imports": [], "global_variables": [], "classes": [], "methods":[]},
         {"name": "script_2", "imports": ["import_1"], "global_variables": [], "classes": [], "methods":[]},
-        {"name": "script_3", "imports": [], "global_variables": [Variable(name="variable_1")], "classes": [], "methods":[]},
+        {
+            "name": "script_3",
+            "imports": [],
+            "global_variables": [Variable(name="variable_1")],
+            "classes": [],
+            "methods":[],
+        },
         {"name": "script_4", "imports": [], "global_variables": [], "classes": [Class(name="class_1")], "methods":[]},
         {"name": "script_5", "imports": [], "global_variables": [], "classes": [], "methods":[Method(name="method_1")]},
     ]
@@ -137,13 +166,39 @@ DICT_TEST_CASES = {
         Variable(name="variable", value=[1, 2, 3], annotation=List[str], variable_type="class_variable"),
         Method(name="method", arguments=[Variable(name="variable_1"), Variable(name="variable_2")]),
         Class(name="class", methods=[Method(name="method")]),
-        Script(name="script", global_variables=[Variable(name="variable")], classes=[Class(name="class")], methods=[Method(name="method")]),
+        Script(
+            name="script",
+            global_variables=[Variable(name="variable")],
+            classes=[Class(name="class")],
+            methods=[Method(name="method")],
+        ),
     ],
     "expected_value": [
         {"name": "variable", "value": [1, 2, 3], "annotation": List[str], "variable_type": "class_variable"},
-        {"name": "method", "arguments": [{"name": "variable_1", "value": None, "variable_type": "", "annotation": None}, {"name": "variable_2", "value": None, "variable_type": "", "annotation": None}], "decorators": []},
-        {"name": "class", "bases": [], "methods": [{"name": "method", "arguments": [], "decorators": []}], "instance_variables": [], "class_variables": []},
-        {"name": "script", "imports": [], "classes": [{"name": "class", "bases": [], "methods": [], "class_variables": [], "instance_variables": []}], "methods": [{"name": "method", "arguments": [], "decorators": []}], "global_variables": [{"name": "variable", "value": None, "variable_type": "", "annotation": None}]},
+        {
+            "name": "method",
+            "arguments": [
+                {"name": "variable_1", "value": None, "variable_type": "", "annotation": None},
+                {"name": "variable_2", "value": None, "variable_type": "", "annotation": None},
+            ],
+            "decorators": [],
+        },
+        {
+            "name": "class",
+            "bases": [],
+            "methods": [{"name": "method", "arguments": [], "decorators": []}],
+            "instance_variables": [],
+            "class_variables": [],
+        },
+        {
+            "name": "script",
+            "imports": [],
+            "classes": [
+                {"name": "class", "bases": [], "methods": [], "class_variables": [], "instance_variables": []}
+            ],
+            "methods": [{"name": "method", "arguments": [], "decorators": []}],
+            "global_variables": [{"name": "variable", "value": None, "variable_type": "", "annotation": None}],
+        },
     ],
 }
 

@@ -96,5 +96,7 @@ def test_dict_representation(dict_sample):
 
 
 def test_schema(schema_sample):
-    assert schema_sample[0].schema() == schema_sample[1], error_message(expected=schema_sample[1], got=schema_sample[0].schema())
-
+    if schema_sample[0].schema() != schema_sample[1]:
+        raise ValueError(
+            error_message(expected=schema_sample[1], got=schema_sample[0].schema())
+        )

@@ -28,7 +28,7 @@ class_def = """
 class Foo(ABC):
     a = 9
     a: int = 9
-    
+
     def function():
         return None
 """

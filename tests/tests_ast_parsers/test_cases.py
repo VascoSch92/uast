@@ -28,8 +28,8 @@ path_2 = Path().cwd()
 annotate_assignment = """
 none_annotation: None = None
 
-int_annotation_1: int = 0 
-  
+int_annotation_1: int = 0
+
 str_annotation_1: str = 's'
 
 list_annotation_1: list = []
@@ -56,7 +56,7 @@ literal_1: Literal['hello', 'world'] = 'hello'
 """
 method = """
 def nothing():
-    return 
+    return
 def one_variable(a)->int:
     return a
 def one_variable_and_type(a:int)->str:
@@ -143,19 +143,55 @@ ANNOTATE_ASSIGNMENT_TEST_CASES = {
         Variable(name="str_annotation_1", value="'s'", variable_type="global variable", annotation="str"),
         Variable(name="list_annotation_1", value="[]", variable_type="global variable", annotation="list"),
         Variable(name="list_annotation_2", value="[]", variable_type="global variable", annotation="List"),
-        Variable(name="list_annotation_3", value="[1, 2, 3]", variable_type="global variable", annotation="List[int]"),
-        Variable(name="list_annotation_4", value="[1, 2, 3]", variable_type="global variable", annotation="List[int, ...]"),
+        Variable(
+            name="list_annotation_3", value="[1, 2, 3]", variable_type="global variable", annotation="List[int]"
+        ),
+        Variable(
+            name="list_annotation_4", value="[1, 2, 3]", variable_type="global variable", annotation="List[int, ...]"
+        ),
         Variable(name="dict_annotation_1", value="{}", variable_type="global variable", annotation="dict"),
         Variable(name="dict_annotation_2", value="{}", variable_type="global variable", annotation="Dict"),
-        Variable(name="dict_annotation_3", value="{'hello': 'world'}", variable_type="global variable", annotation="Dict[str]"),
-        Variable(name="dict_annotation_4", value="{'hello': 'world'}", variable_type="global variable", annotation="Dict[str, str]"),
-        Variable(name="path_annotation", value="Path('path/to/somewhere')", variable_type="global variable", annotation="Path"),
-        Variable(name="numpy_annotation", value="np.zeros(3, 2)", variable_type="global variable", annotation="np.ndarray"),
-        Variable(name="class_annotation_1", value="name_of_a_class()", variable_type="global variable", annotation="NameOfAClass"),
-        Variable(name="class_annotation_2", value="name_of_a_class()", variable_type="global variable", annotation="Type[NameOfAClass]"),
+        Variable(
+            name="dict_annotation_3",
+            value="{'hello': 'world'}",
+            variable_type="global variable",
+            annotation="Dict[str]",
+        ),
+        Variable(
+            name="dict_annotation_4",
+            value="{'hello': 'world'}",
+            variable_type="global variable",
+            annotation="Dict[str, str]",
+        ),
+        Variable(
+            name="path_annotation",
+            value="Path('path/to/somewhere')",
+            variable_type="global variable",
+            annotation="Path",
+        ),
+        Variable(
+            name="numpy_annotation",
+            value="np.zeros(3, 2)",
+            variable_type="global variable",
+            annotation="np.ndarray",
+        ),
+        Variable(
+            name="class_annotation_1",
+            value="name_of_a_class()",
+            variable_type="global variable",
+            annotation="NameOfAClass",
+        ),
+        Variable(
+            name="class_annotation_2",
+            value="name_of_a_class()",
+            variable_type="global variable",
+            annotation="Type[NameOfAClass]",
+        ),
         Variable(name="optional_1", value="None", variable_type="global variable", annotation="Optional[str]"),
         Variable(name="optional_1", value="None", variable_type="global variable", annotation="Union[None, str]"),
-        Variable(name="literal_1", value="'hello'", variable_type="global variable", annotation="Literal['hello', 'world']"),
+        Variable(
+            name="literal_1", value="'hello'", variable_type="global variable", annotation="Literal['hello', 'world']"
+        ),
     ],
 }
 ASSIGNMENT_TEST_CASES = {
@@ -179,8 +215,16 @@ METHOD_TEST_CASES = {
     "input_values": method,
     "expected_values": [
         Method(name="nothing", arguments=[], decorators=[]),
-        Method(name="one_variable", arguments=[Variable(name="a", value=None, variable_type="method argument", annotation=None)], decorators=[]),
-        Method(name="one_variable_and_type", arguments=[Variable(name="a", value=None, variable_type="method argument", annotation="int")], decorators=[]),
+        Method(
+            name="one_variable",
+            arguments=[Variable(name="a", value=None, variable_type="method argument", annotation=None)],
+            decorators=[],
+        ),
+        Method(
+            name="one_variable_and_type",
+            arguments=[Variable(name="a", value=None, variable_type="method argument", annotation="int")],
+            decorators=[],
+        ),
         Method(name="decorators", arguments=[], decorators=["staticmethod", "helloworld"]),
     ],
 }

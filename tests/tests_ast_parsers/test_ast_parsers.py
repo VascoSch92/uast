@@ -104,7 +104,7 @@ def test_parse_ast_dict(input_value, expected_value):
                 "my_function(0)"),
     ]
 )
-def test_parse_ast_constant(input_value, expected_value):
+def test_parse_ast_call(input_value, expected_value):
     if parse_ast_call(ast_call=input_value) != expected_value:
         raise ValueError(
             error_message(

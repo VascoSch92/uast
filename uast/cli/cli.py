@@ -30,7 +30,7 @@ class CommandLineInterface:
 
 def execute_command(args) -> None:
     """
-    This function executes a command based on the provided command-line arguments.
+    The method executes a command based on the provided command-line arguments.
     It expects the following arguments:
 
     - `args.source`: The source file to be parsed.
@@ -58,7 +58,7 @@ def execute_command(args) -> None:
 
 def execute_command_line_interface() -> None:
     """
-    The function executes the command-line interface by calling the `execute` method
+    The method executes the command-line interface by calling the `execute` method
     of the `CommandLineInterface` class.
 
     :return: None
