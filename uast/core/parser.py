@@ -16,6 +16,10 @@ from uast.core.containers.containers import (
     Script,
 )
 
+__all__ = [
+    "parse",
+]
+
 
 def _parse_python_script(source: Path) -> Script:
 
@@ -86,7 +90,7 @@ def _parse_module(module: ast.Module) -> Dict:
     return container_entry
 
 
-def parse(source: Union[str, Path]):
+def parse(source: Union[str, Path]) -> Union[List[Script], Script]:
     if isinstance(source, (str, Path)) is False:
         raise ValueError("Source can not be parsed.")
 
