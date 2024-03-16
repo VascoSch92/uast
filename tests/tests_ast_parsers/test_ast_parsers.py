@@ -18,6 +18,7 @@ from uast.core.ast_parsers import (
     parse_ast_import_from,
     parse_ast_function_def,
     _parse_type_from_annotation,
+    _check_argument_type,
 )
 
 
@@ -210,3 +211,18 @@ def test_parse_ast_import(import_sample):
             raise ValueError(
                 error_message(expected=import_container, got=expected_output)
             )
+
+
+@pytest.mark.parametrize(
+    "expected, got",
+    [
+        (ast.ClassDef, ast.Constant(value=0)),
+        (ast.List, ast.Constant(value=0)),
+    ]
+)
+def test_check_argument_type(expected, got):
+    with pytest.raises(
+            expected_exception=TypeError,
+            match=f"Input must be an instance of {expected}. Got {type(got)}."
+    ):
+        _check_argument_type(expected=expected, got=got)
