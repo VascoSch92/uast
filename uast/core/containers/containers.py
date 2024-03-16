@@ -1,7 +1,10 @@
-from typing import Any, Dict, List, Union
 from dataclasses import field, dataclass
+from typing import Any, Dict, List, Union
 
-from uast.core.containers.containers_mixin import JsonMixin, EqualityMixin
+from uast.core.containers.containers_mixin import (
+    JsonMixin,
+    EqualityMixin,
+)
 
 __all__ = [
     "Variable",
@@ -16,12 +19,32 @@ _LEAF = "|-- "
 
 @dataclass
 class Variable(EqualityMixin, JsonMixin):
+    """
+    The class represents a variable with attributes for its name, value, variable type,
+    and optional annotation. It provides methods for generating a dictionary representation,
+    schema representation, and a string representation of its type and annotation.
+
+    :param name : str
+        The name of the variable.
+    :param value : Any, optional
+        The value of the variable (default is None).
+    :param variable_type : str, optional
+        The type of the variable (default is an empty string).
+    :param annotation : Any, optional
+        The annotation of the variable (default is None).
+    """
     name: str
     value: Any = field(default=None)
     variable_type: str = ""
     annotation: Any = field(default=None)
 
     def __dict__(self) -> Dict:
+        """
+        Generate a dictionary representation of the class.
+
+        :return: A dictionary representation of the variable.
+        :rtype: Dict
+        """
         return {
             "name": self.name,
             "value": self.value,
@@ -30,6 +53,18 @@ class Variable(EqualityMixin, JsonMixin):
         }
 
     def schema(self, _prefix: str = "", _with_leaf: bool = False) -> str:
+        """
+        Generate a schema representation of the class.
+
+        :param _prefix: A prefix string to prepend to the schema representation (default is "").
+        :type _prefix: str
+        :param _with_leaf: A boolean flag indicating whether to include leaf indicators in the schema representation
+            (default is False).
+        :type _with_leaf: bool
+
+        :return: A schema representation of the class.
+        :rtype: str
+        """
         return f"{_prefix}{_LEAF * _with_leaf}{self.name}: {self.variable_type} {self._type_and_annotation_repr()}"
 
     def _type_and_annotation_repr(self) -> str:
@@ -49,6 +84,12 @@ class Method(EqualityMixin, JsonMixin):
     decorators: List[str] = field(default_factory=list)
 
     def __dict__(self) -> Dict:
+        """
+        Generate a dictionary representation of the class.
+
+        :return: A dictionary representation of the variable.
+        :rtype: Dict
+        """
         return {
             "name": self.name,
             "arguments": [_argument.__dict__() for _argument in self.arguments],
@@ -60,6 +101,20 @@ class Method(EqualityMixin, JsonMixin):
         return _return_container_names(containers=self.arguments)
 
     def schema(self, _prefix: str = "", _indent: int = 1, _with_leaf: bool = False) -> str:
+        """
+        Generate a schema representation of the class.
+
+        :param _prefix: A prefix string to prepend to the schema representation (default is "").
+        :type _prefix: str
+        :param _indent: An integer to set the indent.
+        :type _indent: int
+        :param _with_leaf: A boolean flag indicating whether to include leaf indicators in the schema representation
+            (default is False).
+        :type _with_leaf: bool
+
+        :return: A schema representation of the class.
+        :rtype: str
+        """
         schema = f"{_prefix}{_LEAF * _with_leaf}{self.name}: method {self._decorator_representation()}"
         for argument in self.arguments:
             schema += "\n"
@@ -82,6 +137,12 @@ class Class(EqualityMixin, JsonMixin):
     instance_variables: List[Variable] = field(default_factory=list)
 
     def __dict__(self) -> Dict:
+        """
+        Generate a dictionary representation of the class.
+
+        :return: A dictionary representation of the variable.
+        :rtype: Dict
+        """
         return {
             "name": self.name,
             "bases": self.bases,
@@ -103,6 +164,20 @@ class Class(EqualityMixin, JsonMixin):
         return _return_container_names(containers=self.methods)
 
     def schema(self, _prefix: str = "", _indent: int = 1, _with_leaf: bool = False) -> str:
+        """
+        Generate a schema representation of the class.
+
+        :param _prefix: A prefix string to prepend to the schema representation (default is "").
+        :type _prefix: str
+        :param _indent: An integer to set the indent.
+        :type _indent: int
+        :param _with_leaf: A boolean flag indicating whether to include leaf indicators in the schema representation
+            (default is False).
+        :type _with_leaf: bool
+
+        :return: A schema representation of the class.
+        :rtype: str
+        """
         schema = f"{_prefix}{_LEAF * _with_leaf}{self.name}: class {self._base_representation()}"
 
         for class_variable in self.class_variables:
@@ -129,6 +204,12 @@ class Import(EqualityMixin, JsonMixin):
     asname: str = None
 
     def __dict__(self) -> Dict[str, str]:
+        """
+        Generate a dictionary representation of the class.
+
+        :return: A dictionary representation of the variable.
+        :rtype: Dict
+        """
         return {
             "module": self.module,
             "component": self.component,
@@ -136,6 +217,18 @@ class Import(EqualityMixin, JsonMixin):
         }
 
     def schema(self, _prefix: str = "", _with_leaf: bool = False) -> str:
+        """
+        Generate a schema representation of the class.
+
+        :param _prefix: A prefix string to prepend to the schema representation (default is "").
+        :type _prefix: str
+        :param _with_leaf: A boolean flag indicating whether to include leaf indicators in the schema representation
+            (default is False).
+        :type _with_leaf: bool
+
+        :return: A schema representation of the class.
+        :rtype: str
+        """
         schema = f"{_prefix}{_LEAF * _with_leaf}"
 
         if self.component is None:
@@ -144,7 +237,6 @@ class Import(EqualityMixin, JsonMixin):
             return schema + f"from {self.module} import {self.component}"
         if self.component is not None and self.asname is not None:
             return schema + f"from {self.module} import {self.component} as {self.asname}"
-
 
 
 @dataclass
@@ -156,6 +248,12 @@ class Script(EqualityMixin, JsonMixin):
     methods: List[Method] = field(default_factory=list)
 
     def __dict__(self) -> Dict[str, Union[str, List[Dict]]]:
+        """
+        Generate a dictionary representation of the class.
+
+        :return: A dictionary representation of the variable.
+        :rtype: Dict
+        """
         return {
             "name": self.name,
             "imports": [_import.__dict__() for _import in self.imports],
@@ -165,8 +263,8 @@ class Script(EqualityMixin, JsonMixin):
         }
 
     @property
-    def import_names(self) -> List[str]:
-        return _return_container_names(containers=self.self.imports)
+    def import_modules(self) -> List[str]:
+        return [import_.module for import_ in self.imports]
 
     @property
     def global_variables_names(self) -> List[str]:
@@ -181,6 +279,12 @@ class Script(EqualityMixin, JsonMixin):
         return _return_container_names(containers=self.methods)
 
     def schema(self) -> str:
+        """
+        Generate a schema representation of the class.
+
+        :return: A schema representation of the class.
+        :rtype: str
+        """
         schema = f"{self.name}"
 
         if self.imports:

@@ -237,7 +237,11 @@ def parse_ast_assign(
 
     :return: A list of Variable objects representing the assigned variables.
     :rtype: List[Variable]
+
+    :raises TypeError: If the input is not an instance of ast.Assign.
     """
+    _check_argument_type(expected=ast.Assign, got=assignments)
+
     for assignment in assignments.targets:
         if isinstance(assignment, ast.Name):
             return [
@@ -374,6 +378,19 @@ def parse_ast_function_def(method: ast.FunctionDef) -> Method:
 
 
 def parse_ast_class_def(branch: ast.ClassDef) -> Class:
+    """
+    Parse an AST class definition node and extract class information, including class name, base classes,
+    class variables, instance variables, and methods, and returns a Class object.
+
+    :param branch: The AST class definition node to parse.
+    :type branch: ast.ClassDef
+
+    :return: A Class object representing the class extracted from the AST node.
+    :rtype: Class
+
+    :raises TypeError: If the input is not an instance of ast.ClassDef.
+    """
+    _check_argument_type(expected=ast.ClassDef, got=branch)
 
     container_entry = defaultdict(list)
     for leaf in branch.body:
@@ -409,12 +426,28 @@ def parse_ast_class_def(branch: ast.ClassDef) -> Class:
 
 
 def parse_ast_import_from(ast_import_from: ast.ImportFrom) -> List[Import]:
-    module = ast_import_from.module
-    components = [(component.name, component.asname) for component in ast_import_from.names]
+    """
+    Parse an AST import from node and extract import information, including module names and optional aliases,
+    and returns a list of Import objects.
+
+    :param ast_import_from: The AST import from node to parse.
+    :type ast_import_from: ast.ImportFrom
+
+    :return: A list of Import objects representing the imports extracted from the AST node.
+    :rtype: List[Import]
+
+    :raises TypeError: If the input is not an instance of ast.ImportFrom.
+    """
+    _check_argument_type(expected=ast.ImportFrom, got=ast_import_from)
+
+    components = [
+        (component.name, component.asname)
+        for component in ast_import_from.names
+    ]
 
     return [
         Import(
-            module=module,
+            module=ast_import_from.module,
             component=component,
             asname=alias
         )
@@ -423,11 +456,25 @@ def parse_ast_import_from(ast_import_from: ast.ImportFrom) -> List[Import]:
 
 
 def parse_ast_import(ast_import: ast.Import) -> List[Import]:
-    imports = []
-    for _import in ast_import.names:
-        imports.append(
-            (_import.name, _import.asname)
-        )
+    """
+    Parse an AST import node and extract import information, including module names and optional aliases,
+    and returns a list of Import objects.
+
+    :param ast_import: The AST import node to parse.
+    :type ast_import: ast.Import
+
+    :return: A list of Import objects representing the imports extracted from the AST node.
+    :rtype: List[Import]
+
+    :raises TypeError: If the input is not an instance of ast.Import.
+    """
+    _check_argument_type(expected=ast.Import, got=ast_import)
+
+    imports = [
+        (_import.name, _import.asname)
+        for _import in ast_import.names
+    ]
+
     return [
         Import(
             module=module,
