@@ -9,6 +9,33 @@ from uast.core.containers.containers import (
     Variable,
 )
 
+__all__ = [
+    "parse_ast_assign",
+    "parse_ast_import",
+    "parse_ast_class_def",
+    "parse_ast_ann_assign",
+    "parse_ast_import_from",
+    "parse_ast_function_def",
+]
+
+
+def _check_argument_type(expected: Any, got: Any) -> None:
+    """
+    Privet method that check if the type of the input matches the expected type.
+
+    :param expected: The expected type of the input.
+    :type expected: Any
+
+    :param got: The input value to be checked.
+    :type got: Any
+
+    :return: None
+
+    :raises TypeError: If the type of the expected argument is not equal to the type of the got argument.
+    """
+    if isinstance(got, expected) is False:
+        raise TypeError(f"Input must be an instance of {expected}. Got {type(got)}.")
+
 
 def parse_value(value: Any) -> str:
     """
@@ -66,8 +93,7 @@ def parse_ast_constant(ast_constant: ast.Constant) -> str:
     >>> parse_ast_constant(ast.Constant(value='hello'))
     >>> "'hello'"
     """
-    if isinstance(ast_constant, ast.Constant) is False:
-        raise TypeError(f"Input must be an instance of ast.Constant. Got {type(ast_constant)}.")
+    _check_argument_type(expected=ast.Constant, got=ast_constant)
 
     if ast_constant.value is None:
         return "None"
@@ -103,8 +129,7 @@ def parse_ast_list(ast_list: ast.List) -> str:
     >>> parse_ast_list(ast.List(elts=[ast.Constant(value='hello'), ast.Constant(value='world')]))
     >>> "['hello', 'world']"
     """
-    if isinstance(ast_list, ast.List) is False:
-        raise TypeError(f"Input must be an instance of ast.List. Got {type(ast_list)}.")
+    _check_argument_type(expected=ast.List, got=ast_list)
 
     _values = []
     for _value in ast_list.elts:
@@ -138,8 +163,7 @@ def parse_ast_dict(ast_dict: ast.Dict) -> str:
     >>>)
     >>> "{'a': 1, 'b': 2}"
     """
-    if isinstance(ast_dict, ast.Dict) is False:
-        raise TypeError(f"Input must be an instance of ast.Dict. Got {type(ast_dict)}.")
+    _check_argument_type(expected=ast.Dict, got=ast_dict)
 
     _values = [
         (parse_value(value=_key), parse_value(value=value))
@@ -186,8 +210,7 @@ def parse_ast_call(ast_call: ast.Call) -> str:
 
     :raises TypeError: If the input is not an instance of ast.Call.
     """
-    if isinstance(ast_call, ast.Call) is False:
-        raise TypeError(f"Input must be an instance of ast.Call. Got {type(ast_call)}.")
+    _check_argument_type(expected=ast.Call, got=ast_call)
 
     function = parse_func(func=ast_call.func)
     arguments = ", ".join([parse_value(value=value) for value in ast_call.args])
@@ -286,10 +309,10 @@ def parse_ast_arguments(arguments: ast.arguments) -> List[Variable]:
     :return: A list of Variable objects representing method arguments.
     :rtype: List[Variable]
 
-    This function takes AST arguments as input and returns a list of Variable objects. Each Variable object
-    represents a method argument and contains information such as name, type annotation, default value, and
-    variable type.
+    :raises TypeError: If the input is not an instance of ast.arguments.
     """
+    _check_argument_type(expected=ast.arguments, got=arguments)
+
     default_value = [None]*(len(arguments.args) - len(arguments.defaults)) + arguments.defaults
     return [
         Variable(
@@ -317,10 +340,10 @@ def parse_ast_ann_assign(
     :return: A Variable object representing the assigned variable.
     :rtype: Variable
 
-    This function takes an AST annotated assignment and the type of variable as input, and returns a Variable
-    object representing the assigned variable. The Variable object contains information such as name, type
-    annotation, value, and variable type.
+    :raises TypeError: If the input is not an instance of ast.AnnAssign.
     """
+    _check_argument_type(expected=ast.AnnAssign, got=annotate_assignment)
+
     return Variable(
         name=annotate_assignment.target.id,
         annotation=_parse_type_from_annotation(annotation=annotate_assignment.annotation),
@@ -339,9 +362,10 @@ def parse_ast_function_def(method: ast.FunctionDef) -> Method:
     :return: A Method object representing the defined method.
     :rtype: Method
 
-    This function takes an AST function definition as input and returns a Method object representing
-    the defined method. The Method object contains information such as the method name, arguments, and decorators.
+    :raises TypeError: If the input is not an instance of ast.FunctionDef.
     """
+    _check_argument_type(expected=ast.FunctionDef, got=method)
+
     return Method(
         name=method.name,
         arguments=parse_ast_arguments(arguments=method.args),
