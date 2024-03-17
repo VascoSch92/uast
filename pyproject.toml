@@ -7,11 +7,15 @@ log_date_format = "%Y-%m-%d %H:%M:%S"
 [tool.ruff]
 # Set of rules enabled
 lint.select = [
-    "ANN201", # Missing return type annotation for public function `parse`
+    "ANN201", # Missing return type annotation for public function
     "E", # Pycodestyle Error
     "F", # Pyflakes
     "B", # Flake8-bugbear
     "W", # Pycodestyle Warning
+    "D101", # Undocumented public class
+    "D102", # Undocumneted public method
+    "D103", # Undocumented public function
+    "D105", # Undocumented magic method
     "D200", # One-line docstring should fit on one line
     "D202", # No blank lines allowed after function docstring
     "D300", # Use triple double quotes """
