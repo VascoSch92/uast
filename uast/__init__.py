@@ -3,6 +3,7 @@ from uast.core.parser import parse  # noqa: F401
 
 
 def main() -> None:
+    """Entry point for the command line interface."""
     execute_command_line_interface()
 
 

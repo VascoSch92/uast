@@ -10,6 +10,15 @@ class EqualityMixin:
     for equality based on the equality between their container contents.
     """
     def __eq__(self, other) -> bool:
+        """
+        Compare two objects for equality.
+
+        :param other: The object to compare against.
+        :type other: Any
+
+        :return: True if the objects are equal, False otherwise.
+        :rtype: bool
+        """
         return equality_between_containers(a=self, b=other, _type=type(self))
 
 

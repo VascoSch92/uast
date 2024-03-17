@@ -4,7 +4,19 @@ from uast.__version__ import __version__
 
 
 class CliParser:
+    """
+    Command-line argument parser for the program.
+
+    The class provides methods to parse command-line arguments and configure an ArgumentParser object
+    with specific settings for the program.
+    """
     def parse(self) -> argparse.Namespace:
+        """
+        Parse command-line arguments and return the parsed namespace.
+
+        :return: Parsed command-line arguments stored as a namespace.
+        :rtype: argparse.Namespace
+        """
         parser = self.create_parser()
 
         parser = self.add_version_command(parser=parser)

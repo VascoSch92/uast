@@ -1,6 +1,6 @@
 import ast
 import itertools
-from typing import Dict, List, Union, Any
+from typing import Any, Dict, List, Union
 from pathlib import Path
 from collections import defaultdict
 

@@ -1,5 +1,5 @@
-from dataclasses import field, dataclass
 from typing import Any, Dict, List, Union
+from dataclasses import field, dataclass
 
 from uast.core.containers.containers_mixin import (
     JsonMixin,
@@ -24,14 +24,14 @@ class Variable(EqualityMixin, JsonMixin):
     and optional annotation. It provides methods for generating a dictionary representation,
     schema representation, and a string representation of its type and annotation.
 
-    :param name : str
-        The name of the variable.
-    :param value : Any, optional
-        The value of the variable (default is None).
-    :param variable_type : str, optional
-        The type of the variable (default is an empty string).
-    :param annotation : Any, optional
-        The annotation of the variable (default is None).
+    :param name: The name of the variable.
+    :type name: str
+    :param value: The value of the variable (default is None).
+    :type value: Any, optional
+    :param variable_type: The type of the variable (default is an empty string).
+    :type variable_type: str, optional
+    :param annotation: The annotation of the variable (default is None).
+    :type variable_type: Any, optional
     """
     name: str
     value: Any = field(default=None)
@@ -88,6 +88,19 @@ class Variable(EqualityMixin, JsonMixin):
 
 @dataclass
 class Method(EqualityMixin, JsonMixin):
+    """
+    Represents a method.
+
+    This class defines attributes and methods to represent a method, including its name, arguments,
+    and decorators. It provides methods to generate dictionary and schema representations of the method.
+
+    :param name: The name of the method.
+    :type name: str
+    :param arguments: A list of Variable objects representing the arguments of the method (default is an empty list).
+    :type arguments: List[Variable], optional
+    :param decorators: A list of strings representing the decorators of the method (default is an empty list).
+    :type decorators: List[str], optional
+    """
     name: str
     arguments: List[Variable] = field(default_factory=list)
     decorators: List[str] = field(default_factory=list)
@@ -145,6 +158,24 @@ class Method(EqualityMixin, JsonMixin):
 
 @dataclass
 class Class(EqualityMixin, JsonMixin):
+    """
+    The class defines attributes and methods to represent a class, including its name, bases,
+    methods, class variables, and instance variables. It provides methods to generate dictionary
+    and schema representations of the class.
+
+    :param name: The name of the class.
+    :type name: str
+    :param bases: A list of strings representing the names of the base classes (default is an empty list).
+    :type bases: List[str], optional
+    :param methods: A list of Method objects representing the methods of the class (default is an empty list).
+    :type methods: List[Method], optional
+    :param class_variables: A list of Variable objects representing the class variables of the class
+        (default is an empty list).
+    :type class_variables: List[Variable], optional
+    :param instance_variables: A list of Variable objects representing the instance variables of the class
+        (default is an empty list).
+    :type instance_variables: List[Variable], optional
+    """
     name: str
     bases: List[str] = field(default_factory=list)
     methods: List[Method] = field(default_factory=list)
@@ -240,6 +271,18 @@ class Class(EqualityMixin, JsonMixin):
 
 @dataclass
 class Import(EqualityMixin, JsonMixin):
+    """
+    The class represents an import statement in Python code, including the imported module,
+    imported component, and optional alias. It provides methods to generate dictionary and schema
+    representations of the import statement.
+
+    :param module: The name of the imported module.
+    :type module: str
+    :param component: The name of the imported component (default is None).
+    :type component: str, optional
+    :param asname: The alias assigned to the imported component (default is None).
+    :type asname: str, optional
+    """
     module: str
     component: str = None
     asname: str = None
@@ -282,6 +325,22 @@ class Import(EqualityMixin, JsonMixin):
 
 @dataclass
 class Script(EqualityMixin, JsonMixin):
+    """
+    The class represents a Python script, including its name, imports, global variables, classes,
+    and methods. It provides methods to generate dictionary and schema representations of the script,
+    as well as properties to access information about its imports, global variables, classes, and methods.
+
+    :param name: The name of the script.
+    :type name: str
+    :param imports: The list of import statements in the script (default is an empty list).
+    :type imports: List[Import], optional
+    :param global_variables: The list of global variables defined in the script (default is an empty list).
+    :type global_variables: List[Variable], optional
+    :param classes: The list of classes defined in the script (default is an empty list).
+    :type classes: List[Class], optional
+    :param methods: The list of methods defined in the script (default is an empty list).
+    :type methods: List[Method], optional
+    """
     name: str
     imports: List[Import] = field(default_factory=list)
     global_variables: List[Variable] = field(default_factory=list)
