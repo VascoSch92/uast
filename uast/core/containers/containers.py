@@ -68,6 +68,15 @@ class Variable(EqualityMixin, JsonMixin):
         return f"{_prefix}{_LEAF * _with_leaf}{self.name}: {self.variable_type} {self._type_and_annotation_repr()}"
 
     def _type_and_annotation_repr(self) -> str:
+        """
+        The method generates a string representation of the type and annotation of a variable. If both the annotation
+        and the value of the variable are present, the string includes both the annotation and the value. If only the
+        annotation is present, the string includes only the annotation. If only the value is present, the string
+        includes only the value. If neither the annotation nor the value is present, an empty string is returned.
+
+        :return: A string representing the type and annotation of the variable.
+        :rtype: str
+        """
         if self.annotation and self.value:
             return f"(annotation: {self.annotation}, value: {self.value})"
         elif self.annotation:
@@ -98,6 +107,12 @@ class Method(EqualityMixin, JsonMixin):
 
     @property
     def arguments_names(self) -> List[str]:
+        """
+        The property returns a list containing the names of the arguments associated with the method.
+
+        :return: A list containing the names of the arguments.
+        :rtype: List[str]
+        """
         return _return_container_names(containers=self.arguments)
 
     def schema(self, _prefix: str = "", _indent: int = 1, _with_leaf: bool = False) -> str:
@@ -153,14 +168,32 @@ class Class(EqualityMixin, JsonMixin):
 
     @property
     def class_variables_names(self) -> List[str]:
+        """
+        The property returns a list containing the names of the class variables associated with the class.
+
+        :return: A list containing the names of the class variables.
+        :rtype: List[str]
+        """
         return _return_container_names(containers=self.class_variables)
 
     @property
     def instance_variables_names(self) -> List[str]:
+        """
+        The property returns a list containing the names of the instance variables associated with the class.
+
+        :return: A list containing the names of the instance variables.
+        :rtype: List[str]
+        """
         return _return_container_names(containers=self.instance_variables)
 
     @property
     def methods_names(self) -> List[str]:
+        """
+        The property returns a list containing the names of the methods associated with the class.
+
+        :return: A list containing the names of the methods.
+        :rtype: List[str]
+        """
         return _return_container_names(containers=self.methods)
 
     def schema(self, _prefix: str = "", _indent: int = 1, _with_leaf: bool = False) -> str:
@@ -194,6 +227,14 @@ class Class(EqualityMixin, JsonMixin):
         return schema
 
     def _base_representation(self) -> str:
+        """
+        The method generates a string representation of the bases from which the class extends. If the class has
+        one or more bases, the string includes the phrase "extends from" followed by a comma-separated list of the
+        base names. If the class has no bases, an empty string is returned.
+
+        :return: A string representing the bases from which the class extends.
+        :rtype: str
+        """
         return f"(extends from: {', '.join(self.bases)})" if self.bases else ""
 
 
@@ -264,18 +305,42 @@ class Script(EqualityMixin, JsonMixin):
 
     @property
     def import_modules(self) -> List[str]:
+        """
+        The property returns a list containing the names of the imports associated with the script.
+
+        :return: A list containing the names of the imports.
+        :rtype: List[str]
+        """
         return [import_.module for import_ in self.imports]
 
     @property
     def global_variables_names(self) -> List[str]:
+        """
+        The property returns a list containing the names of the global variables associated with the script.
+
+        :return: A list containing the names of the global variables.
+        :rtype: List[str]
+        """
         return _return_container_names(containers=self.global_variables)
 
     @property
     def classes_names(self) -> List[str]:
+        """
+        The property returns a list containing the names of the classes associated with the script.
+
+        :return: A list containing the names of the classes.
+        :rtype: List[str]
+        """
         return _return_container_names(containers=self.classes)
 
     @property
     def methods_names(self) -> List[str]:
+        """
+        The property returns a list containing the names of the method associated with the script.
+
+        :return: A list containing the names of the methods.
+        :rtype: List[str]
+        """
         return _return_container_names(containers=self.methods)
 
     def schema(self) -> str:
@@ -311,8 +376,33 @@ class Script(EqualityMixin, JsonMixin):
 
 
 def _generate_prefix(prefix: str, indent: int, with_leaf: bool) -> str:
+    """
+    The method generates a prefix string to create the schema of a container. The prefix string is composed of the
+    base prefix, followed by a leaf symbol (if `with_leaf` is True), and additional indentation spaces
+    (specified by `indent`).
+
+    :param prefix: The base prefix string.
+    :type prefix: str
+    :param indent: The number of spaces to indent.
+    :type indent: int
+    :param with_leaf: Whether to include a leaf symbol.
+    :type with_leaf: bool
+
+    :return: The formatted prefix string.
+    :rtype: str
+    """
     return f"{prefix}{'|' * with_leaf}{' ' * indent}"
 
 
 def _return_container_names(containers: List[Union[Variable, Method, Class, Script]]) -> List[str]:
+    """
+    The method takes a list of container objects, which can include variables, methods, classes, or scripts,
+    and extracts their names. It returns a list containing the names of all the containers in the input list.
+
+    :param containers: A list of container objects (variables, methods, classes, or scripts).
+    :type containers: List[Union[Variable, Method, Class, Script]]
+
+    :return: A list containing the names of the containers.
+    :rtype: List[str]
+    """
     return [container.name for container in containers]
