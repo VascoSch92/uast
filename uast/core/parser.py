@@ -81,20 +81,11 @@ def _parse_module(module: ast.Module) -> Dict[str, Any]:
     """
     container_entry = defaultdict(list)
     for branch in module.body:
-
         if isinstance(branch, ast.Import):
-            container_entry["imports"].extend(
-                parse_ast_import(
-                    ast_import=branch
-                )
-            )
+            container_entry["imports"].extend(parse_ast_import(ast_import=branch))
 
         if isinstance(branch, ast.ImportFrom):
-            container_entry["imports"].extend(
-                parse_ast_import_from(
-                    ast_import_from=branch
-                )
-            )
+            container_entry["imports"].extend(parse_ast_import_from(ast_import_from=branch))
 
         if isinstance(branch, ast.Assign):
             container_entry["global_variables"].extend(
@@ -113,14 +104,10 @@ def _parse_module(module: ast.Module) -> Dict[str, Any]:
             )
 
         if isinstance(branch, ast.FunctionDef):
-            container_entry["methods"].append(
-                parse_ast_function_def(method=branch)
-            )
+            container_entry["methods"].append(parse_ast_function_def(method=branch))
 
         if isinstance(branch, ast.ClassDef):
-            container_entry["classes"].append(
-                parse_ast_class_def(branch=branch)
-            )
+            container_entry["classes"].append(parse_ast_class_def(branch=branch))
 
     return container_entry
 
@@ -151,9 +138,7 @@ def parse(source: Union[str, Path]) -> Union[List[Script], Script]:
     if Path(source).exists():
         source = Path(source).absolute()
         if source.is_dir():
-            raise NotImplementedError(
-                "Schema for directory and project not yer implemented."
-            )
+            raise NotImplementedError("Schema for directory and project not yer implemented.")
         elif source.is_file():
             if source.suffix != ".py":
                 raise ValueError(f"Expecting a Python file. Got a {source.suffix}-file.")

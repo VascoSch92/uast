@@ -63,3 +63,7 @@ lint.flake8-quotes.multiline-quotes = "double"
 
 lint.isort.combine-as-imports = true
 lint.isort.length-sort = true
+
+[tool.ruff.format]
+indent-style = "space"
+skip-magic-trailing-comma = false

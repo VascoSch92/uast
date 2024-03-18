@@ -166,8 +166,7 @@ def parse_ast_dict(ast_dict: ast.Dict) -> str:
     _check_argument_type(expected=ast.Dict, got=ast_dict)
 
     _values = [
-        (parse_value(value=_key), parse_value(value=value))
-        for _key, value in zip(ast_dict.keys, ast_dict.values)
+        (parse_value(value=_key), parse_value(value=value)) for _key, value in zip(ast_dict.keys, ast_dict.values)
     ]
     return "{" + ", ".join([f"{_key.__str__()}: {_value.__str__()}" for _key, _value in _values]) + "}"
 
@@ -221,8 +220,8 @@ def parse_ast_call(ast_call: ast.Call) -> str:
 
 
 def parse_ast_assign(
-        assignments: ast.Assign,
-        variable_type: Literal["class variable", "instance variable", "global variable"],
+    assignments: ast.Assign,
+    variable_type: Literal["class variable", "instance variable", "global variable"],
 ) -> List[Variable]:
     """
     Get variable containers for assignments in the provided AST node.
@@ -317,7 +316,7 @@ def parse_ast_arguments(arguments: ast.arguments) -> List[Variable]:
     """
     _check_argument_type(expected=ast.arguments, got=arguments)
 
-    default_value = [None]*(len(arguments.args) - len(arguments.defaults)) + arguments.defaults
+    default_value = [None] * (len(arguments.args) - len(arguments.defaults)) + arguments.defaults
     return [
         Variable(
             name=argument.arg,
@@ -330,8 +329,8 @@ def parse_ast_arguments(arguments: ast.arguments) -> List[Variable]:
 
 
 def parse_ast_ann_assign(
-        annotate_assignment: ast.AnnAssign,
-        variable_type: Literal["class variable", "instance variable", "global variable"],
+    annotate_assignment: ast.AnnAssign,
+    variable_type: Literal["class variable", "instance variable", "global variable"],
 ) -> Variable:
     """
     Parse the AST annotated assignment and return a Variable object representing the assigned variable.
@@ -373,7 +372,7 @@ def parse_ast_function_def(method: ast.FunctionDef) -> Method:
     return Method(
         name=method.name,
         arguments=parse_ast_arguments(arguments=method.args),
-        decorators=[decorator.id for decorator in method.decorator_list]
+        decorators=[decorator.id for decorator in method.decorator_list],
     )
 
 
@@ -394,7 +393,6 @@ def parse_ast_class_def(branch: ast.ClassDef) -> Class:
 
     container_entry = defaultdict(list)
     for leaf in branch.body:
-
         if isinstance(leaf, ast.Assign):
             container_entry["class_variables"].extend(
                 parse_ast_assign(
@@ -405,16 +403,11 @@ def parse_ast_class_def(branch: ast.ClassDef) -> Class:
 
         if isinstance(leaf, ast.AnnAssign):
             container_entry["class_variables"].append(
-                parse_ast_ann_assign(
-                    annotate_assignment=leaf,
-                    variable_type="class variable"
-                )
+                parse_ast_ann_assign(annotate_assignment=leaf, variable_type="class variable")
             )
 
         if isinstance(leaf, ast.FunctionDef):
-            container_entry["methods"].append(
-                parse_ast_function_def(method=leaf)
-            )
+            container_entry["methods"].append(parse_ast_function_def(method=leaf))
 
     return Class(
         name=branch.name,
@@ -440,19 +433,9 @@ def parse_ast_import_from(ast_import_from: ast.ImportFrom) -> List[Import]:
     """
     _check_argument_type(expected=ast.ImportFrom, got=ast_import_from)
 
-    components = [
-        (component.name, component.asname)
-        for component in ast_import_from.names
-    ]
+    components = [(component.name, component.asname) for component in ast_import_from.names]
 
-    return [
-        Import(
-            module=ast_import_from.module,
-            component=component,
-            asname=alias
-        )
-        for component, alias in components
-    ]
+    return [Import(module=ast_import_from.module, component=component, asname=alias) for component, alias in components]
 
 
 def parse_ast_import(ast_import: ast.Import) -> List[Import]:
@@ -470,10 +453,7 @@ def parse_ast_import(ast_import: ast.Import) -> List[Import]:
     """
     _check_argument_type(expected=ast.Import, got=ast_import)
 
-    imports = [
-        (_import.name, _import.asname)
-        for _import in ast_import.names
-    ]
+    imports = [(_import.name, _import.asname) for _import in ast_import.names]
 
     return [
         Import(

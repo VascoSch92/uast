@@ -33,6 +33,7 @@ class Variable(EqualityMixin, JsonMixin):
     :param annotation: The annotation of the variable (default is None).
     :type variable_type: Any, optional
     """
+
     name: str
     value: Any = field(default=None)
     variable_type: str = ""
@@ -101,6 +102,7 @@ class Method(EqualityMixin, JsonMixin):
     :param decorators: A list of strings representing the decorators of the method (default is an empty list).
     :type decorators: List[str], optional
     """
+
     name: str
     arguments: List[Variable] = field(default_factory=list)
     decorators: List[str] = field(default_factory=list)
@@ -176,6 +178,7 @@ class Class(EqualityMixin, JsonMixin):
         (default is an empty list).
     :type instance_variables: List[Variable], optional
     """
+
     name: str
     bases: List[str] = field(default_factory=list)
     methods: List[Method] = field(default_factory=list)
@@ -253,7 +256,7 @@ class Class(EqualityMixin, JsonMixin):
             schema += method.schema(
                 _prefix=_generate_prefix(prefix=_prefix, indent=_indent, with_leaf=_with_leaf),
                 _indent=4,
-                _with_leaf=True
+                _with_leaf=True,
             )
         return schema
 
@@ -283,6 +286,7 @@ class Import(EqualityMixin, JsonMixin):
     :param asname: The alias assigned to the imported component (default is None).
     :type asname: str, optional
     """
+
     module: str
     component: str = None
     asname: str = None
@@ -341,6 +345,7 @@ class Script(EqualityMixin, JsonMixin):
     :param methods: The list of methods defined in the script (default is an empty list).
     :type methods: List[Method], optional
     """
+
     name: str
     imports: List[Import] = field(default_factory=list)
     global_variables: List[Variable] = field(default_factory=list)

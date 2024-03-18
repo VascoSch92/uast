@@ -10,6 +10,7 @@ class CliParser:
     The class provides methods to parse command-line arguments and configure an ArgumentParser object
     with specific settings for the program.
     """
+
     def parse(self) -> argparse.Namespace:
         """
         Parse command-line arguments and return the parsed namespace.
@@ -78,12 +79,7 @@ class CliParser:
         This method adds an optional positional argument 'source' to the parser,
         which specifies the source to parse.
         """
-        parser.add_argument(
-            "source",
-            type=str,
-            nargs="?",
-            help="Source to parse"
-        )
+        parser.add_argument("source", type=str, nargs="?", help="Source to parse")
         return parser
 
     @staticmethod
@@ -105,11 +101,5 @@ class CliParser:
         - The print option allows the user to specify what information to print.
         - It accept one of the following values: `schema` and `json`.
         """
-        parser.add_argument(
-            "-p",
-            "--print",
-            nargs="+",
-            choices=["schema", "json"],
-            help="Print option"
-        )
+        parser.add_argument("-p", "--print", nargs="+", choices=["schema", "json"], help="Print option")
         return parser

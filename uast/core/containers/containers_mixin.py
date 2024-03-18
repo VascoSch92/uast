@@ -9,6 +9,7 @@ class EqualityMixin:
     This mixin provides an `__eq__` method to compare instances of the class
     for equality based on the equality between their container contents.
     """
+
     def __eq__(self, other) -> bool:
         """
         Compare two objects for equality.
@@ -22,11 +23,7 @@ class EqualityMixin:
         return equality_between_containers(a=self, b=other, _type=type(self))
 
 
-def equality_between_containers(
-        a: Any,
-        b: Any,
-        _type: Any,
-) -> bool:
+def equality_between_containers(a: Any, b: Any, _type: Any) -> bool:
     """
     The method compares two containers 'a' and 'b' of the specified type '_type'
     for equality. It first checks if 'b' is an instance of the specified type.

@@ -15,6 +15,7 @@ class CommandLineInterface:
     :Methods:
         - `execute() -> None`: Parse command-line arguments and execute corresponding commands.
     """
+
     @staticmethod
     def execute() -> None:
         """
