@@ -32,7 +32,4 @@ def generate_samples(test_cases: Dict) -> List[Tuple]:
     >>> generate_samples(test_cases)
     [(1, 10), (2, 20), (3, 30)]
     """
-    return list(
-        (input, expected)
-        for input, expected in zip(test_cases["input_value"], test_cases["expected_value"])
-    )
+    return list((input, expected) for input, expected in zip(test_cases["input_value"], test_cases["expected_value"]))

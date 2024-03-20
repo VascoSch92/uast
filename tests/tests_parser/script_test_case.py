@@ -9,7 +9,6 @@ GLOBAL, ANOTHER_GLOBAL = "GLOBAL", "ANOTHER_GLOBAL"
 
 
 class Base(ABC):
-
     @abstractmethod
     def base(self, d: Union[str, int], c: np.ndarray):
         raise NotImplementedError
@@ -23,12 +22,11 @@ class Foo(Base):
         self.a = a
         self.b = b
 
-    def base(self, d,  c: float = 0.99) -> int:
+    def base(self, d, c: float = 0.99) -> int:
         return self.a + 0
 
 
 class Bar:
-
     @staticmethod
     def bar() -> int:
         return 0

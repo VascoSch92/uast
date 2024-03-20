@@ -36,11 +36,7 @@ def generate_sample_from_ast_parse(test_cases: Dict, attribute: str = "") -> Lis
     """
     test_cases_tree = ast.parse(test_cases["input_values"])
 
-    input_values = [
-        branch.__getattribute__(attribute)
-        if attribute else branch
-        for branch in test_cases_tree.body
-    ]
+    input_values = [branch.__getattribute__(attribute) if attribute else branch for branch in test_cases_tree.body]
     expected_values = test_cases["expected_values"]
 
     return list((input, expected) for input, expected in zip(input_values, expected_values))

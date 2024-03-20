@@ -22,7 +22,7 @@ jobs:
         pip install ruff
     - name: Formatting
       run: |
-         ruff format uast --diff
+         ruff format . --diff
     - name: Linting
       run: |
-         ruff check uast --output-file=github
+         ruff check . --output-file=github

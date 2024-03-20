@@ -143,9 +143,7 @@ ANNOTATE_ASSIGNMENT_TEST_CASES = {
         Variable(name="str_annotation_1", value="'s'", variable_type="global variable", annotation="str"),
         Variable(name="list_annotation_1", value="[]", variable_type="global variable", annotation="list"),
         Variable(name="list_annotation_2", value="[]", variable_type="global variable", annotation="List"),
-        Variable(
-            name="list_annotation_3", value="[1, 2, 3]", variable_type="global variable", annotation="List[int]"
-        ),
+        Variable(name="list_annotation_3", value="[1, 2, 3]", variable_type="global variable", annotation="List[int]"),
         Variable(
             name="list_annotation_4", value="[1, 2, 3]", variable_type="global variable", annotation="List[int, ...]"
         ),
@@ -234,7 +232,7 @@ ARGUMENT_TEST_CASES = {
         [Variable(name="a", annotation=None, value=None, variable_type="method argument")],
         [Variable(name="a", value=None, variable_type="method argument", annotation=None)],
         [Variable(name="a", value=None, variable_type="method argument", annotation="int")],
-        [None]
+        [None],
     ],
 }
 CLASS_TEST_CASES = {
@@ -261,8 +259,9 @@ CLASS_TEST_CASES = {
                     arguments=[
                         Variable(name="self", value=None, variable_type="method argument", annotation=None),
                         Variable(name="d", value=None, variable_type="method argument", annotation=None),
-                        Variable(name="c", value=0.99, variable_type="method argument", annotation="float")],
-                )
+                        Variable(name="c", value=0.99, variable_type="method argument", annotation="float"),
+                    ],
+                ),
             ],
         )
     ],
@@ -276,7 +275,6 @@ IMPORT_FROM_TEST_CASES = {
             Import(module="import_module_1.import_module_2.import_module_3", component="import_1"),
             Import(module="import_module_1.import_module_2.import_module_3", component="import_2"),
             Import(module="import_module_1.import_module_2.import_module_3", component="import_3"),
-
         ],
         [
             Import(module="imports", component="import_1"),

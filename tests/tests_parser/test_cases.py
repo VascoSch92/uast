@@ -61,7 +61,7 @@ script_test_case = Script(
     global_variables=[
         Variable(name="CONST", value="Path().cwd()", variable_type="global variable", annotation=None),
         Variable(name="GLOBAL", value="GLOBAL", variable_type="global variable", annotation=None),
-        Variable(name="ANOTHER_GLOBAL", value="ANOTHER_GLOBAL", variable_type="global variable", annotation=None)
+        Variable(name="ANOTHER_GLOBAL", value="ANOTHER_GLOBAL", variable_type="global variable", annotation=None),
     ],
     classes=[
         Class(
@@ -73,11 +73,13 @@ script_test_case = Script(
                     arguments=[
                         Variable(name="self", value=None, variable_type="method argument", annotation=None),
                         Variable(name="d", value=None, variable_type="method argument", annotation="Union[str, int]"),
-                        Variable(name="c", value=None, variable_type="method argument", annotation="np.ndarray")],
-                    decorators=["abstractmethod"])
+                        Variable(name="c", value=None, variable_type="method argument", annotation="np.ndarray"),
+                    ],
+                    decorators=["abstractmethod"],
+                )
             ],
             class_variables=[],
-            instance_variables=[]
+            instance_variables=[],
         ),
         Class(
             name="Foo",
@@ -88,35 +90,35 @@ script_test_case = Script(
                     arguments=[
                         Variable(name="self", value=None, variable_type="method argument", annotation=None),
                         Variable(name="a", value=None, variable_type="method argument", annotation="int"),
-                        Variable(name="b", value=None, variable_type="method argument", annotation="str")
+                        Variable(name="b", value=None, variable_type="method argument", annotation="str"),
                     ],
-                    decorators=[]
+                    decorators=[],
                 ),
                 Method(
                     name="base",
                     arguments=[
                         Variable(name="self", value=None, variable_type="method argument", annotation=None),
                         Variable(name="d", value=None, variable_type="method argument", annotation=None),
-                        Variable(name="c", value=0.99, variable_type="method argument", annotation="float")],
-                    decorators=[]
-                )
+                        Variable(name="c", value=0.99, variable_type="method argument", annotation="float"),
+                    ],
+                    decorators=[],
+                ),
             ],
             class_variables=[
                 Variable(name="CONST_1", value="0", variable_type="class variable", annotation=None),
-                Variable(name="CONST_2", value="'A'", variable_type="class variable", annotation="str")
+                Variable(name="CONST_2", value="'A'", variable_type="class variable", annotation="str"),
             ],
-            instance_variables=[]
+            instance_variables=[],
         ),
         Class(
             name="Bar",
             bases=[],
-            methods=[
-                Method(name="bar", arguments=[], decorators=["staticmethod"])
-            ],
+            methods=[Method(name="bar", arguments=[], decorators=["staticmethod"])],
             class_variables=[],
-            instance_variables=[])
+            instance_variables=[],
+        ),
     ],
-    methods=[]
+    methods=[],
 )
 
 
@@ -134,7 +136,7 @@ TREE_TEST_CASES = {
         function_def_container,
         double_function_def_container,
         class_def_container,
-    ]
+    ],
 }
 PARSE_TEST_CASE = {
     "input_value": [
