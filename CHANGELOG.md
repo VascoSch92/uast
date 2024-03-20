@@ -17,7 +17,7 @@
 The version is represented by three digits: a.b.c.
 - Bump the first digit (a) for an API_CHANGE.
 - Bump the second digit (b) for a FEATURE or a critical FIX.
-- Bump the third digit (c) for an ENHANCEMENT or a small FIX.
+- Bump the third digit (c) for an ENHANCEMENT, MAINTENANCE or a small FIX.
 - Once a digit is bumped, set all the digits to its right to zero.
 
 ---
