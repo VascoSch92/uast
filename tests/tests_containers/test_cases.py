@@ -28,7 +28,7 @@ VARIABLE_INSTANCES_TEST_CASES = {
         {"name": "variable_3", "value": None, "variable_type": "", "annotation": int},
         {"name": "variable_4", "value": "abc", "variable_type": "", "annotation": str},
         {"name": "variable_5", "value": [1, 2, 3], "variable_type": "clas variable", "annotation": List[str]},
-    ]
+    ],
 }
 
 
@@ -49,10 +49,13 @@ METHOD_INSTANCES_TEST_CASES = {
         {"name": "method_2", "arguments": [Variable(name="variable_1")], "decorators": []},
         {
             "name": "method_3",
-            "arguments": [Variable(name="variable_1"), Variable(name="variable_2"), ],
+            "arguments": [
+                Variable(name="variable_1"),
+                Variable(name="variable_2"),
+            ],
             "decorators": [],
         },
-    ]
+    ],
 }
 
 METHOD_PROPERTIES_TEST_CASES = {
@@ -61,7 +64,7 @@ METHOD_PROPERTIES_TEST_CASES = {
         {"arguments_names": []},
         {"arguments_names": ["variable_1"]},
         {"arguments_names": ["variable_1", "variable_2"]},
-    ]
+    ],
 }
 
 
@@ -80,8 +83,8 @@ classes = [
 CLASS_INSTANCES_TEST_CASES = {
     "input_value": classes,
     "expected_value": [
-        {"name": "class_1", "bases": [], "methods": [], "class_variables": [], "instance_variables":[]},
-        {"name": "class_2", "bases": ["basis"], "methods": [], "class_variables": [], "instance_variables":[]},
+        {"name": "class_1", "bases": [], "methods": [], "class_variables": [], "instance_variables": []},
+        {"name": "class_2", "bases": ["basis"], "methods": [], "class_variables": [], "instance_variables": []},
         {
             "name": "class_3",
             "bases": [],
@@ -94,7 +97,7 @@ CLASS_INSTANCES_TEST_CASES = {
             "bases": [],
             "methods": [],
             "class_variables": [],
-            "instance_variables":[Variable(name="variable_1")],
+            "instance_variables": [Variable(name="variable_1")],
         },
         {
             "name": "class_5",
@@ -103,7 +106,7 @@ CLASS_INSTANCES_TEST_CASES = {
             "class_variables": [],
             "instance_variables": [],
         },
-    ]
+    ],
 }
 
 CLASS_PROPERTIES_TEST_CASES = {
@@ -114,7 +117,7 @@ CLASS_PROPERTIES_TEST_CASES = {
         {"class_variables_names": ["variable_1"], "instance_variables_names": [], "methods_names": []},
         {"class_variables_names": [], "instance_variables_names": ["variable_1"], "methods_names": []},
         {"class_variables_names": [], "instance_variables_names": [], "methods_names": ["method_1"]},
-    ]
+    ],
 }
 
 ##########
@@ -132,23 +135,24 @@ script = [
 SCRIPT_INSTANCES_TEST_CASES = {
     "input_value": script,
     "expected_value": [
-        {"name": "script_1", "imports": [], "global_variables": [], "classes": [], "methods":[]},
-        {"name": "script_2",
-         "imports": [Import(module="import_1")],
-         "global_variables": [],
-         "classes": [],
-         "methods":[]
-         },
+        {"name": "script_1", "imports": [], "global_variables": [], "classes": [], "methods": []},
+        {
+            "name": "script_2",
+            "imports": [Import(module="import_1")],
+            "global_variables": [],
+            "classes": [],
+            "methods": [],
+        },
         {
             "name": "script_3",
             "imports": [],
             "global_variables": [Variable(name="variable_1")],
             "classes": [],
-            "methods":[],
+            "methods": [],
         },
-        {"name": "script_4", "imports": [], "global_variables": [], "classes": [Class(name="class_1")], "methods":[]},
-        {"name": "script_5", "imports": [], "global_variables": [], "classes": [], "methods":[Method(name="method_1")]},
-    ]
+        {"name": "script_4", "imports": [], "global_variables": [], "classes": [Class(name="class_1")], "methods": []},
+        {"name": "script_5", "imports": [], "global_variables": [], "classes": [], "methods": [Method(name="method_1")]},
+    ],
 }
 
 SCRIPT_PROPERTY_TEST_CASES = {
@@ -159,7 +163,7 @@ SCRIPT_PROPERTY_TEST_CASES = {
         {"global_variables_names": ["variable_1"], "classes_names": [], "methods_names": []},
         {"global_variables_names": [], "classes_names": ["class_1"], "methods_names": []},
         {"global_variables_names": [], "classes_names": [], "methods_names": ["method_1"]},
-    ]
+    ],
 }
 
 ##########
@@ -198,9 +202,7 @@ DICT_TEST_CASES = {
         {
             "name": "script",
             "imports": [],
-            "classes": [
-                {"name": "class", "bases": [], "methods": [], "class_variables": [], "instance_variables": []}
-            ],
+            "classes": [{"name": "class", "bases": [], "methods": [], "class_variables": [], "instance_variables": []}],
             "methods": [{"name": "method", "arguments": [], "decorators": []}],
             "global_variables": [{"name": "variable", "value": None, "variable_type": "", "annotation": None}],
         },
@@ -217,8 +219,8 @@ SCHEMA_TEST_CASES = {
                 Variable(name="d", value=None, variable_type="method argument", annotation="Union[str, int]"),
                 Variable(name="c", value=None, variable_type="method argument", annotation="np.ndarray"),
             ],
-            decorators=["abstractmethod"]
-        )
+            decorators=["abstractmethod"],
+        ),
     ],
     "expected_value": [
         "d: method argument (annotation: Union[str, int])",
@@ -226,6 +228,5 @@ SCHEMA_TEST_CASES = {
         " |-- self: method argument \n"
         " |-- d: method argument (annotation: Union[str, int])\n"
         " |-- c: method argument (annotation: np.ndarray)",
-    ]
-
+    ],
 }
