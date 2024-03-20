@@ -61,7 +61,7 @@ def _equality_between_dictionaries(a: Dict, b: Dict) -> bool:
     :return: True if the dictionaries are equal, False otherwise.
     :rtype: bool
     """
-    if a.keys != b.keys():
+    if a.keys() != b.keys():
         return False
     for key in a.keys():
         if a[key] != b[key]:

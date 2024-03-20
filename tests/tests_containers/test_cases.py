@@ -2,10 +2,10 @@ from typing import List
 
 from uast.core.containers.containers import (
     Class,
+    Import,
     Method,
     Script,
     Variable,
-    Import,
 )
 
 ############

@@ -9,7 +9,7 @@ from uast.core.parser import (
 )
 
 
-def test_parse_tree(tree_sample):
+def test_parse_tree(tree_sample) -> None:
     tree = _parse_tree(source=tree_sample[0])
     for tree_value, expected_value in zip(tree, tree_sample[1]):
         if tree_value != expected_value:
@@ -18,7 +18,7 @@ def test_parse_tree(tree_sample):
             )
 
 
-def test_parser(parse_sample):
+def test_parser(parse_sample) -> None:
     tree = parse(source=parse_sample[0])
     if isinstance(tree, List):
         for tree_value, expected_value in zip(tree, parse_sample[1]):
@@ -41,6 +41,6 @@ def test_parser(parse_sample):
         (0, ValueError),
     ]
 )
-def test_parser_error(source, error):
+def test_parser_error(source, error) -> None:
     with pytest.raises(error):
         _ = parse(source=source)

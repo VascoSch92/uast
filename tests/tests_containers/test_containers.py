@@ -21,7 +21,7 @@ def _check_instance(sample: List, instance_names: List[str]) -> None:
 # VARIABLE #
 ############
 
-def test_instance_variable_containers(variable_sample):
+def test_instance_variable_containers(variable_sample) -> None:
     _check_instance(sample=variable_sample, instance_names=["name", "value", "annotation", "variable_type"])
 
 
@@ -29,11 +29,11 @@ def test_instance_variable_containers(variable_sample):
 # METHOD #
 ##########
 
-def test_instance_method_containers(method_sample):
+def test_instance_method_containers(method_sample) -> None:
     _check_instance(sample=method_sample, instance_names=["name", "arguments", "decorators"])
 
 
-def test_method_properties(method_property_sample):
+def test_method_properties(method_property_sample) -> None:
     _check_instance(sample=method_property_sample, instance_names=["arguments_names"])
 
 
@@ -41,14 +41,14 @@ def test_method_properties(method_property_sample):
 # CLASS #
 #########
 
-def test_instance_class_containers(class_sample):
+def test_instance_class_containers(class_sample) -> None:
     _check_instance(
         sample=class_sample,
         instance_names=["name", "bases", "methods", "instance_variables", "class_variables"],
     )
 
 
-def test_class_properties(class_property_sample):
+def test_class_properties(class_property_sample) -> None:
     _check_instance(
         sample=class_property_sample,
         instance_names=["class_variables_names", "instance_variables_names", "methods_names"]
@@ -59,14 +59,14 @@ def test_class_properties(class_property_sample):
 # SCRIPT #
 ##########
 
-def test_instance_script_containers(script_sample):
+def test_instance_script_containers(script_sample) -> None:
     _check_instance(
         sample=script_sample,
         instance_names=["name", "imports", "methods", "global_variables", "classes"]
     )
 
 
-def test_script_properties(script_property_sample):
+def test_script_properties(script_property_sample) -> None:
     _check_instance(
         sample=script_property_sample,
         instance_names=["global_variables_names", "classes_names", "methods_names"],
@@ -77,7 +77,7 @@ def test_script_properties(script_property_sample):
 # COMMON #
 ##########
 
-def test_dict_representation(dict_sample):
+def test_dict_representation(dict_sample) -> None:
     input_dict_repr = dict_sample[0].__dict__()
     expected_dict_repr = dict_sample[1]
 
@@ -95,7 +95,7 @@ def test_dict_representation(dict_sample):
             )
 
 
-def test_schema(schema_sample):
+def test_schema(schema_sample) -> None:
     if schema_sample[0].schema() != schema_sample[1]:
         raise ValueError(
             error_message(expected=schema_sample[1], got=schema_sample[0].schema())
