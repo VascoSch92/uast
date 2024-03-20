@@ -1,7 +1,6 @@
-from typing import Dict, List
-
 from _pytest.python import Metafunc
 
+from tests.utils import generate_samples
 from tests.tests_containers.test_cases import (
     DICT_TEST_CASES,
     SCHEMA_TEST_CASES,
@@ -15,16 +14,9 @@ from tests.tests_containers.test_cases import (
 )
 
 
-def _generate_samples(test_cases: Dict) -> List:
-    return [
-        (input, expected)
-        for input, expected in zip(test_cases["input_value"], test_cases["expected_value"])
-    ]
-
-
-def pytest_generate_tests(metafunc: Metafunc):
+def pytest_generate_tests(metafunc: Metafunc) -> None:
     if "variable_sample" in metafunc.fixturenames:
-        samples = _generate_samples(test_cases=VARIABLE_INSTANCES_TEST_CASES)
+        samples = generate_samples(test_cases=VARIABLE_INSTANCES_TEST_CASES)
         metafunc.parametrize(
             argnames="variable_sample",
             argvalues=samples,
@@ -32,7 +24,7 @@ def pytest_generate_tests(metafunc: Metafunc):
         )
 
     if "method_sample" in metafunc.fixturenames:
-        samples = _generate_samples(test_cases=METHOD_INSTANCES_TEST_CASES)
+        samples = generate_samples(test_cases=METHOD_INSTANCES_TEST_CASES)
         metafunc.parametrize(
             argnames="method_sample",
             argvalues=samples,
@@ -40,7 +32,7 @@ def pytest_generate_tests(metafunc: Metafunc):
         )
 
     if "method_property_sample" in metafunc.fixturenames:
-        samples = _generate_samples(test_cases=METHOD_PROPERTIES_TEST_CASES)
+        samples = generate_samples(test_cases=METHOD_PROPERTIES_TEST_CASES)
         metafunc.parametrize(
             argnames="method_property_sample",
             argvalues=samples,
@@ -48,7 +40,7 @@ def pytest_generate_tests(metafunc: Metafunc):
         )
 
     if "class_sample" in metafunc.fixturenames:
-        samples = _generate_samples(test_cases=CLASS_INSTANCES_TEST_CASES)
+        samples = generate_samples(test_cases=CLASS_INSTANCES_TEST_CASES)
         metafunc.parametrize(
             argnames="class_sample",
             argvalues=samples,
@@ -56,7 +48,7 @@ def pytest_generate_tests(metafunc: Metafunc):
         )
 
     if "class_property_sample" in metafunc.fixturenames:
-        samples = _generate_samples(test_cases=CLASS_PROPERTIES_TEST_CASES)
+        samples = generate_samples(test_cases=CLASS_PROPERTIES_TEST_CASES)
         metafunc.parametrize(
             argnames="class_property_sample",
             argvalues=samples,
@@ -64,7 +56,7 @@ def pytest_generate_tests(metafunc: Metafunc):
         )
 
     if "script_sample" in metafunc.fixturenames:
-        samples = _generate_samples(test_cases=SCRIPT_INSTANCES_TEST_CASES)
+        samples = generate_samples(test_cases=SCRIPT_INSTANCES_TEST_CASES)
         metafunc.parametrize(
             argnames="script_sample",
             argvalues=samples,
@@ -72,7 +64,7 @@ def pytest_generate_tests(metafunc: Metafunc):
         )
 
     if "script_property_sample" in metafunc.fixturenames:
-        samples = _generate_samples(test_cases=SCRIPT_PROPERTY_TEST_CASES)
+        samples = generate_samples(test_cases=SCRIPT_PROPERTY_TEST_CASES)
         metafunc.parametrize(
             argnames="script_property_sample",
             argvalues=samples,
@@ -80,7 +72,7 @@ def pytest_generate_tests(metafunc: Metafunc):
         )
 
     if "dict_sample" in metafunc.fixturenames:
-        samples = _generate_samples(test_cases=DICT_TEST_CASES)
+        samples = generate_samples(test_cases=DICT_TEST_CASES)
         metafunc.parametrize(
             argnames="dict_sample",
             argvalues=samples,
@@ -88,7 +80,7 @@ def pytest_generate_tests(metafunc: Metafunc):
         )
 
     if "schema_sample" in metafunc.fixturenames:
-        samples = _generate_samples(test_cases=SCHEMA_TEST_CASES)
+        samples = generate_samples(test_cases=SCHEMA_TEST_CASES)
         metafunc.parametrize(
             argnames="schema_sample",
             argvalues=samples,

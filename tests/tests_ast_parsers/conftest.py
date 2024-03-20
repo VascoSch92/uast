@@ -1,5 +1,5 @@
 import ast
-from typing import Dict, List
+from typing import Dict, List, Tuple
 
 from _pytest.python import Metafunc
 
@@ -16,7 +16,7 @@ from tests.tests_ast_parsers.test_cases import (
 )
 
 
-def _generate_samples(test_cases: Dict, attribute: str = "") -> List:
+def generate_sample_from_ast_parse(test_cases: Dict, attribute: str = "") -> List[Tuple]:
     """
     Generate sample input-output pairs from test cases.
 
@@ -43,12 +43,12 @@ def _generate_samples(test_cases: Dict, attribute: str = "") -> List:
     ]
     expected_values = test_cases["expected_values"]
 
-    return [(input, expected) for input, expected in zip(input_values, expected_values)]
+    return list((input, expected) for input, expected in zip(input_values, expected_values))
 
 
-def pytest_generate_tests(metafunc: Metafunc):
+def pytest_generate_tests(metafunc: Metafunc) -> None:
     if "annotation_sample" in metafunc.fixturenames:
-        samples = _generate_samples(test_cases=ANNOTATION_TEST_CASES, attribute="annotation")
+        samples = generate_sample_from_ast_parse(test_cases=ANNOTATION_TEST_CASES, attribute="annotation")
         metafunc.parametrize(
             argnames="annotation_sample",
             argvalues=samples,
@@ -56,7 +56,7 @@ def pytest_generate_tests(metafunc: Metafunc):
         )
 
     if "value_sample" in metafunc.fixturenames:
-        samples = _generate_samples(test_cases=VALUE_TEST_CASES, attribute="value")
+        samples = generate_sample_from_ast_parse(test_cases=VALUE_TEST_CASES, attribute="value")
         metafunc.parametrize(
             argnames="value_sample",
             argvalues=samples,
@@ -64,7 +64,7 @@ def pytest_generate_tests(metafunc: Metafunc):
         )
 
     if "annotate_assignment_sample" in metafunc.fixturenames:
-        samples = _generate_samples(test_cases=ANNOTATE_ASSIGNMENT_TEST_CASES)
+        samples = generate_sample_from_ast_parse(test_cases=ANNOTATE_ASSIGNMENT_TEST_CASES)
         metafunc.parametrize(
             argnames="annotate_assignment_sample",
             argvalues=samples,
@@ -72,7 +72,7 @@ def pytest_generate_tests(metafunc: Metafunc):
         )
 
     if "assignment_sample" in metafunc.fixturenames:
-        samples = _generate_samples(test_cases=ASSIGNMENT_TEST_CASES)
+        samples = generate_sample_from_ast_parse(test_cases=ASSIGNMENT_TEST_CASES)
         metafunc.parametrize(
             argnames="assignment_sample",
             argvalues=samples,
@@ -80,7 +80,7 @@ def pytest_generate_tests(metafunc: Metafunc):
         )
 
     if "method_sample" in metafunc.fixturenames:
-        samples = _generate_samples(test_cases=METHOD_TEST_CASES)
+        samples = generate_sample_from_ast_parse(test_cases=METHOD_TEST_CASES)
         metafunc.parametrize(
             argnames="method_sample",
             argvalues=samples,
@@ -88,7 +88,7 @@ def pytest_generate_tests(metafunc: Metafunc):
         )
 
     if "argument_sample" in metafunc.fixturenames:
-        samples = _generate_samples(test_cases=ARGUMENT_TEST_CASES, attribute="args")
+        samples = generate_sample_from_ast_parse(test_cases=ARGUMENT_TEST_CASES, attribute="args")
         metafunc.parametrize(
             argnames="argument_sample",
             argvalues=samples,
@@ -96,7 +96,7 @@ def pytest_generate_tests(metafunc: Metafunc):
         )
 
     if "class_sample" in metafunc.fixturenames:
-        samples = _generate_samples(test_cases=CLASS_TEST_CASES)
+        samples = generate_sample_from_ast_parse(test_cases=CLASS_TEST_CASES)
         metafunc.parametrize(
             argnames="class_sample",
             argvalues=samples,
@@ -104,7 +104,7 @@ def pytest_generate_tests(metafunc: Metafunc):
         )
 
     if "import_from_sample" in metafunc.fixturenames:
-        samples = _generate_samples(test_cases=IMPORT_FROM_TEST_CASES)
+        samples = generate_sample_from_ast_parse(test_cases=IMPORT_FROM_TEST_CASES)
         metafunc.parametrize(
             argnames="import_from_sample",
             argvalues=samples,
@@ -112,7 +112,7 @@ def pytest_generate_tests(metafunc: Metafunc):
         )
 
     if "import_sample" in metafunc.fixturenames:
-        samples = _generate_samples(test_cases=IMPORT_TEST_CASES)
+        samples = generate_sample_from_ast_parse(test_cases=IMPORT_TEST_CASES)
         metafunc.parametrize(
             argnames="import_sample",
             argvalues=samples,
