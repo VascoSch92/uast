@@ -416,13 +416,9 @@ class Script(EqualityMixin, JsonMixin):
         """
         schema = f"{self.name}"
 
-        if self.imports:
+        for import_ in self.imports:
             schema += "\n"
-            schema += f" {_LEAF}imports"
-
-            for import_ in self.imports:
-                schema += "\n"
-                schema += import_.schema(_prefix=" |    ", _with_leaf=True)
+            schema += import_.schema(_prefix=" |    ", _with_leaf=True)
 
         for global_variable in self.global_variables:
             schema += "\n"
