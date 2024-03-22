@@ -18,7 +18,7 @@ jobs:
           echo "VERSION=$(awk -F'["]' '/__version__/ {print $2}' uast/__version__.py)" >> $GITHUB_ENV
       - name: Retrieve body from CHANGELOG.md
         run: |
-          echo "BODY=$(awk '/^## \[/{if (flag) exit; flag=1} /^# Changelog/{flag=0} flag' CHANGELOG.md)" >> $GITHUB_ENV
+          echo "BODY=$(awk '/^## \[/{if (flag) exit; flag=1} /^# Changelog/{flag=0} flag' CHANGELOG.md)" >> $GITHUB_OUTPUT
       - name: Create Release
         id: create_release
         uses: actions/create-release@v1
