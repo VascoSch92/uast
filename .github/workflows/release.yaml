@@ -28,6 +28,6 @@ jobs:
           tag_name: v$VERSION
           release_name: v$VERSION
           body: |
-            $BODY
+            awk '/^## \[/{if (flag) exit; flag=1} /^# Changelog/{flag=0} flag' CHANGELOG.md
           draft: false
           prerelease: false
