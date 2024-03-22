@@ -13,17 +13,21 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+      - name: Retrieve version from __version__.py
+        run: |
+          VERSION=$(awk -F"'" '/__version__/{print $2}' sequence/__version__.py)
+      - name: Retrieve body from CHANGELOG.md
+        run: |
+          BODY=$(awk '/^## \[/{if (flag) exit; flag=1} /^# Changelog/{flag=0} flag' CHANGELOG.md)
       - name: Create Release
         id: create_release
         uses: actions/create-release@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: try
-          release_name: uast try
+          tag_name: "v$VERSION"
+          release_name: "v$VERSION"
           body: |
-            Changes in this Release
-            - First Change
-            - Second Change
+            "$BODY"
           draft: false
           prerelease: false
