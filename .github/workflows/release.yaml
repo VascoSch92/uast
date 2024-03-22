@@ -15,7 +15,7 @@ jobs:
         uses: actions/checkout@v4
       - name: Retrieve version from __version__.py
         run: |
-          VERSION=$(awk -F"'" '/__version__/{print $2}' sequence/__version__.py)
+          VERSION=$(awk -F"'" '/__version__/{print $2}' uast/__version__.py)
       - name: Retrieve body from CHANGELOG.md
         run: |
           BODY=$(awk '/^## \[/{if (flag) exit; flag=1} /^# Changelog/{flag=0} flag' CHANGELOG.md)
