@@ -19,8 +19,8 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: ${{ github.ref }}
-          release_name: uast ${{ github.ref }}
+          tag_name: try
+          release_name: uast try
           body: |
             Changes in this Release
             - First Change
