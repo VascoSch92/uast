@@ -43,7 +43,7 @@ def equality_between_containers(a: Any, b: Any, _type: Any) -> bool:
     if isinstance(b, _type) is False:
         return False
 
-    return _equality_between_dictionaries(a=a.__dict__(), b=b.__dict__())
+    return _equality_between_dictionaries(a=a.as_dict(), b=b.as_dict())
 
 
 def _equality_between_dictionaries(a: Dict, b: Dict) -> bool:

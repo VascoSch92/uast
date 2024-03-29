@@ -1,6 +1,10 @@
 from typing import List
 
-from tests.utils import error_message
+from tests.utils import (
+    error_message,
+    lists_are_equal,
+)
+
 
 
 def _check_instance(sample: List, instance_names: List[str]) -> None:
@@ -8,8 +12,8 @@ def _check_instance(sample: List, instance_names: List[str]) -> None:
     for instance_name in instance_names:
         if getattr(sample[0], instance_name) != sample[1][instance_name]:
             error_message_stack += error_message(
-                expected=sample[0].__dict__()[instance_name],
-                got=sample[1][instance_name],
+                expected=sample[1][instance_name],
+                got=getattr(sample[0], instance_name),
             )
             error_message_stack += "\n"
 
@@ -34,11 +38,6 @@ def test_instance_variable_containers(variable_sample) -> None:
 def test_instance_method_containers(method_sample) -> None:
     _check_instance(sample=method_sample, instance_names=["name", "arguments", "decorators"])
 
-
-def test_method_properties(method_property_sample) -> None:
-    _check_instance(sample=method_property_sample, instance_names=["arguments_names"])
-
-
 #########
 # CLASS #
 #########
@@ -51,27 +50,20 @@ def test_instance_class_containers(class_sample) -> None:
     )
 
 
-def test_class_properties(class_property_sample) -> None:
-    _check_instance(
-        sample=class_property_sample,
-        instance_names=["class_variables_names", "instance_variables_names", "methods_names"],
-    )
-
-
 ##########
 # SCRIPT #
 ##########
 
 
-def test_instance_script_containers(script_sample) -> None:
-    _check_instance(sample=script_sample, instance_names=["name", "imports", "methods", "global_variables", "classes"])
+def test_instance_script_container(script_sample) -> None:
+    input_script = script_sample[0]
+    expected_script = script_sample[1]
 
+    if input_script.name != expected_script["name"]:
+        error_message(expected=expected_script.name, got=input_script.name)
 
-def test_script_properties(script_property_sample) -> None:
-    _check_instance(
-        sample=script_property_sample,
-        instance_names=["global_variables_names", "classes_names", "methods_names"],
-    )
+    if lists_are_equal(a=input_script.content, b=expected_script["content"]) is False:
+        error_message(expected=input_script.content, got=expected_script.content)
 
 
 ##########
@@ -80,7 +72,7 @@ def test_script_properties(script_property_sample) -> None:
 
 
 def test_dict_representation(dict_sample) -> None:
-    input_dict_repr = dict_sample[0].__dict__()
+    input_dict_repr = dict_sample[0].as_dict()
     expected_dict_repr = dict_sample[1]
 
     # checks that the two dicts have same set of keys

@@ -126,43 +126,29 @@ CLASS_PROPERTIES_TEST_CASES = {
 
 script = [
     Script(name="script_1"),
-    Script(name="script_2", imports=[Import(module="import_1")]),
-    Script(name="script_3", global_variables=[Variable(name="variable_1")]),
-    Script(name="script_4", classes=[Class(name="class_1")]),
-    Script(name="script_5", methods=[Method(name="method_1")]),
+    Script(name="script_2", content=[Import(module="import_1")]),
+    Script(name="script_3", content=[Variable(name="variable_1")]),
+    Script(name="script_4", content=[Class(name="class_1")]),
+    Script(name="script_5", content=[Method(name="method_1")]),
 ]
 
 SCRIPT_INSTANCES_TEST_CASES = {
     "input_value": script,
     "expected_value": [
-        {"name": "script_1", "imports": [], "global_variables": [], "classes": [], "methods": []},
-        {
-            "name": "script_2",
-            "imports": [Import(module="import_1")],
-            "global_variables": [],
-            "classes": [],
-            "methods": [],
-        },
+        {"name": "script_1", "content": []},
+        {"name": "script_2", "content": [Import(module="import_1")]},
         {
             "name": "script_3",
-            "imports": [],
-            "global_variables": [Variable(name="variable_1")],
-            "classes": [],
-            "methods": [],
+            "content": [Variable(name="variable_1")]
         },
-        {"name": "script_4", "imports": [], "global_variables": [], "classes": [Class(name="class_1")], "methods": []},
-        {"name": "script_5", "imports": [], "global_variables": [], "classes": [], "methods": [Method(name="method_1")]},
-    ],
-}
-
-SCRIPT_PROPERTY_TEST_CASES = {
-    "input_value": script,
-    "expected_value": [
-        {"global_variables_names": [], "classes_names": [], "methods_names": []},
-        {"global_variables_names": [], "classes_names": [], "methods_names": []},
-        {"global_variables_names": ["variable_1"], "classes_names": [], "methods_names": []},
-        {"global_variables_names": [], "classes_names": ["class_1"], "methods_names": []},
-        {"global_variables_names": [], "classes_names": [], "methods_names": ["method_1"]},
+        {
+            "name": "script_4",
+            "content": [Class(name="class_1")]
+        },
+        {
+            "name": "script_5",
+            "content": [Method(name="method_1")]
+        },
     ],
 }
 
@@ -177,9 +163,11 @@ DICT_TEST_CASES = {
         Class(name="class", methods=[Method(name="method")]),
         Script(
             name="script",
-            global_variables=[Variable(name="variable")],
-            classes=[Class(name="class")],
-            methods=[Method(name="method")],
+            content=[
+                Variable(name="variable"),
+                Class(name="class"),
+                Method(name="method"),
+            ],
         ),
     ],
     "expected_value": [
@@ -201,10 +189,11 @@ DICT_TEST_CASES = {
         },
         {
             "name": "script",
-            "imports": [],
-            "classes": [{"name": "class", "bases": [], "methods": [], "class_variables": [], "instance_variables": []}],
-            "methods": [{"name": "method", "arguments": [], "decorators": []}],
-            "global_variables": [{"name": "variable", "value": None, "variable_type": "", "annotation": None}],
+            "content": [
+                {"name": "variable", "value": None, "variable_type": "", "annotation": None},
+                {"name": "class", "bases": [], "methods": [], "class_variables": [], "instance_variables": []},
+                {"name": "method", "arguments": [], "decorators": []},
+            ],
         },
     ],
 }

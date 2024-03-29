@@ -33,3 +33,12 @@ def generate_samples(test_cases: Dict) -> List[Tuple]:
     [(1, 10), (2, 20), (3, 30)]
     """
     return list((input, expected) for input, expected in zip(test_cases["input_value"], test_cases["expected_value"]))
+
+def lists_are_equal(a: List, b: List) -> bool:
+
+    if len(a) != len(b):
+        return False
+    for element_a, element_b in zip(a, b):
+        if element_a != element_b:
+            return False
+    return True

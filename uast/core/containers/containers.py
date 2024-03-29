@@ -1,3 +1,4 @@
+import ast
 from typing import Any, Dict, List, Union
 from dataclasses import field, dataclass
 
@@ -39,7 +40,7 @@ class Variable(EqualityMixin, JsonMixin):
     variable_type: str = ""
     annotation: Any = field(default=None)
 
-    def __dict__(self) -> Dict:
+    def as_dict(self) -> Dict:
         """
         Generate a dictionary representation of the class.
 
@@ -107,7 +108,7 @@ class Method(EqualityMixin, JsonMixin):
     arguments: List[Variable] = field(default_factory=list)
     decorators: List[str] = field(default_factory=list)
 
-    def __dict__(self) -> Dict:
+    def as_dict(self) -> Dict:
         """
         Generate a dictionary representation of the class.
 
@@ -116,12 +117,12 @@ class Method(EqualityMixin, JsonMixin):
         """
         return {
             "name": self.name,
-            "arguments": [_argument.__dict__() for _argument in self.arguments],
+            "arguments": [_argument.as_dict() for _argument in self.arguments],
             "decorators": self.decorators,
         }
 
     @property
-    def arguments_names(self) -> List[str]:
+    def argument_names(self) -> List[str]:
         """
         The property returns a list containing the names of the arguments associated with the method.
 
@@ -185,7 +186,7 @@ class Class(EqualityMixin, JsonMixin):
     class_variables: List[Variable] = field(default_factory=list)
     instance_variables: List[Variable] = field(default_factory=list)
 
-    def __dict__(self) -> Dict:
+    def as_dict(self) -> Dict:
         """
         Generate a dictionary representation of the class.
 
@@ -195,13 +196,13 @@ class Class(EqualityMixin, JsonMixin):
         return {
             "name": self.name,
             "bases": self.bases,
-            "methods": [_methods.__dict__() for _methods in self.methods],
-            "class_variables": [_variable.__dict__() for _variable in self.class_variables],
-            "instance_variables": [_variable.__dict__() for _variable in self.instance_variables],
+            "methods": [_methods.as_dict() for _methods in self.methods],
+            "class_variables": [_variable.as_dict() for _variable in self.class_variables],
+            "instance_variables": [_variable.as_dict() for _variable in self.instance_variables],
         }
 
     @property
-    def class_variables_names(self) -> List[str]:
+    def variable_names(self) -> List[str]:
         """
         The property returns a list containing the names of the class variables associated with the class.
 
@@ -221,7 +222,7 @@ class Class(EqualityMixin, JsonMixin):
         return _return_container_names(containers=self.instance_variables)
 
     @property
-    def methods_names(self) -> List[str]:
+    def method_names(self) -> List[str]:
         """
         The property returns a list containing the names of the methods associated with the class.
 
@@ -291,7 +292,7 @@ class Import(EqualityMixin, JsonMixin):
     component: str = None
     asname: str = None
 
-    def __dict__(self) -> Dict[str, str]:
+    def as_dict(self) -> Dict[str, str]:
         """
         Generate a dictionary representation of the class.
 
@@ -336,23 +337,19 @@ class Script(EqualityMixin, JsonMixin):
 
     :param name: The name of the script.
     :type name: str
-    :param imports: The list of import statements in the script (default is an empty list).
-    :type imports: List[Import], optional
-    :param global_variables: The list of global variables defined in the script (default is an empty list).
-    :type global_variables: List[Variable], optional
-    :param classes: The list of classes defined in the script (default is an empty list).
-    :type classes: List[Class], optional
-    :param methods: The list of methods defined in the script (default is an empty list).
-    :type methods: List[Method], optional
+    :param content: The list of element in the script.
+    :type List: List
     """
-
     name: str
-    imports: List[Import] = field(default_factory=list)
-    global_variables: List[Variable] = field(default_factory=list)
-    classes: List[Class] = field(default_factory=list)
-    methods: List[Method] = field(default_factory=list)
+    content: List = field(default_factory=list)
 
-    def __dict__(self) -> Dict[str, Union[str, List[Dict]]]:
+    def add(self, token: Any) -> None:
+        if isinstance(token, List):
+            self.content.extend(token)
+        else:
+            self.content.append(token)
+
+    def as_dict(self) -> Dict[str, Union[str, List[Dict]]]:
         """
         Generate a dictionary representation of the class.
 
@@ -361,41 +358,50 @@ class Script(EqualityMixin, JsonMixin):
         """
         return {
             "name": self.name,
-            "imports": [_import.__dict__() for _import in self.imports],
-            "global_variables": [_variable.__dict__() for _variable in self.global_variables],
-            "classes": [_class.__dict__() for _class in self.classes],
-            "methods": [_methods.__dict__() for _methods in self.methods],
+            "content": [_content.as_dict() for _content in self.content],
         }
 
     @property
-    def import_modules(self) -> List[str]:
+    def imports(self) -> List[Import]:
         """
         The property returns a list containing the names of the imports associated with the script.
 
         :return: A list containing the names of the imports.
         :rtype: List[str]
         """
-        return [import_.module for import_ in self.imports]
+        return [token for token in self.content if isinstance(token, Import)]
 
     @property
-    def global_variables_names(self) -> List[str]:
+    def variables(self) -> List[Variable]:
         """
         The property returns a list containing the names of the global variables associated with the script.
 
         :return: A list containing the names of the global variables.
         :rtype: List[str]
         """
-        return _return_container_names(containers=self.global_variables)
+        return [token for token in self.content if isinstance(token, Variable)]
 
     @property
-    def classes_names(self) -> List[str]:
+    def variable_names(self) -> List[str]:
+        return [variable.name for variable in self.variables]
+
+    @property
+    def classes(self) -> List[Class]:
         """
         The property returns a list containing the names of the classes associated with the script.
 
         :return: A list containing the names of the classes.
         :rtype: List[str]
         """
-        return _return_container_names(containers=self.classes)
+        return [token for token in self.content if isinstance(token, Class)]
+
+    @property
+    def class_names(self) -> List[str]:
+        return [_class.name for _class in self.classes]
+
+    @property
+    def methods(self) -> List[Method]:
+        return [token for token in self.content if isinstance(token, Method)]
 
     @property
     def methods_names(self) -> List[str]:
@@ -405,7 +411,7 @@ class Script(EqualityMixin, JsonMixin):
         :return: A list containing the names of the methods.
         :rtype: List[str]
         """
-        return _return_container_names(containers=self.methods)
+        return [method.name for method in self.methods]
 
     def schema(self) -> str:
         """
@@ -418,7 +424,7 @@ class Script(EqualityMixin, JsonMixin):
 
         for import_ in self.imports:
             schema += "\n"
-            schema += import_.schema(_prefix=" |    ", _with_leaf=True)
+            schema += import_.schema(_prefix=f" {_LEAF}")
 
         for global_variable in self.global_variables:
             schema += "\n"

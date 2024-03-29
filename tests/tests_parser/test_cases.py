@@ -51,19 +51,15 @@ class_def_container = [
 
 script_test_case = Script(
     name="script_test_case.py",
-    imports=[
+    content=[
         Import(module="abc", component="ABC", asname=None),
         Import(module="abc", component="abstractmethod", asname=None),
         Import(module="typing", component="Union", asname=None),
         Import(module="pathlib", component="Path", asname=None),
         Import(module="numpy", component=None, asname="np"),
-    ],
-    global_variables=[
         Variable(name="CONST", value="Path().cwd()", variable_type="global variable", annotation=None),
         Variable(name="GLOBAL", value="GLOBAL", variable_type="global variable", annotation=None),
         Variable(name="ANOTHER_GLOBAL", value="ANOTHER_GLOBAL", variable_type="global variable", annotation=None),
-    ],
-    classes=[
         Class(
             name="Base",
             bases=["ABC"],
@@ -118,7 +114,6 @@ script_test_case = Script(
             instance_variables=[],
         ),
     ],
-    methods=[],
 )
 
 
